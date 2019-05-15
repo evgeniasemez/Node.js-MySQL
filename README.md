@@ -9,4 +9,4 @@ How many units of the product would you like to buy?
 Error Pass:
 what if there are not enough items in stock
 
-![Screenshot] (images/bamazonShot_error.png)
+![Screenshot](images/bamazonShot_error.png)
