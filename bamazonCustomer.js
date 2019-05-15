@@ -17,14 +17,19 @@ var connection = mysql.createConnection({
 
 connection.connect(function (err) {
     if (err) throw err;
-    console.log("connected as id " + connection.threadId);
+    // console.log("connected as id " + connection.threadId);
     // connection.end();
     afterConnection();
 });
 function afterConnection() {
     connection.query("SELECT `item_id`, `product_name`, `price` FROM products", function (err, res) {
         if (err) throw err;
-        console.log(res);
+        res.forEach(function (element) {
+            console.log("Product id: " + element.item_id);
+            console.log("Product name: " + element.product_name);
+            console.log("Product price: " + element.price);
+        });
+
         // connection.end();
         promptUsers();
     });
@@ -58,7 +63,7 @@ function promptUsers() {
             },
         ])
         .then(function (answer) {
-            console.log("answer", answer);
+            // console.log("answer", answer);
             checkInventoryLevel(answer);
             // connection.end();
         });
@@ -70,7 +75,7 @@ function checkInventoryLevel(answer) {
         },
         function (err, res) {
             if (err) throw err;
-            console.log(res);
+            // console.log(res);
             if (res[0].stock_quantity < answer.units) {
                 console.log("Insufficient quantity!");
                 connection.end();
@@ -82,8 +87,8 @@ function checkInventoryLevel(answer) {
         });
 }
 function updatedDB(answer, res) {
-    console.log(res[0].stock_quantity);
-    console.log(res[0].stock_quantity - answer.units);
+    // console.log(res[0].stock_quantity);
+    // console.log(res[0].stock_quantity - answer.units);
     connection.query("UPDATE products SET ? WHERE ?",
         [
             {
