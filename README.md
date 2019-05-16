@@ -13,10 +13,12 @@ what if there are not enough items in stock
 
 2. user usage for bamazonManager:
 from the list of commands pick the one you would like to run:
-View Products for Sale
-View Low Inventory
-Add to Inventory
-Add New Product
+- "View Products for Sale"
+- "View Low Inventory"
+- "Add to Inventory"
+- "Add New Product"
+
+
 
 First case: View Products for Sale
 ![Screenshot](images/bamazonManagerShot_1.png)
@@ -30,4 +32,4 @@ Third case: Add to Inventory
 Forth case: Add New Product
 ![Screenshot](images/bamazonManagerShot_NewItem.png)
 result:
-![Screenshot](images/bamazonManagerShot_result.png)
+![Screenshot](images/bamazonManagerShot_result.png.png)
