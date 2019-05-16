@@ -17,13 +17,10 @@ var connection = mysql.createConnection({
 
 connection.connect(function (err) {
     if (err) throw err;
-    // console.log("connected as id " + connection.threadId);
-    // connection.end();
     promptManagers();
 });
-
+// prompt managers for action
 function promptManagers() {
-    // prompt for info about the item being put up for auction
     inquirer
         .prompt([
             {
@@ -41,12 +38,10 @@ function promptManagers() {
             },
         ])
         .then(function (answer) {
-            // console.log("answer", answer);
-            // checkInventoryLevel(answer);
             commands(answer);
-            // connection.end();
         });
 }
+// getting data from mysql for first command "View Products for Sale"
 function afterConnection() {
     connection.query("SELECT `item_id`, `product_name`, `price`, `stock_quantity` FROM products", function (err, res) {
         if (err) throw err;
@@ -56,12 +51,10 @@ function afterConnection() {
             console.log("Product price: " + element.price);
             console.log("Product quantity: " + element.stock_quantity)
         });
-
-        // connection.end();
         promptManagers();
     });
 }
-
+// second command "View Low Inventory"
 function afterConnection1() {
     connection.query("SELECT `item_id`, `product_name`, `price`, `stock_quantity` FROM products WHERE  `stock_quantity` < 5 ", function (err, res) {
         if (err) throw err;
@@ -71,14 +64,11 @@ function afterConnection1() {
             console.log("Product price: " + element.price);
             console.log("Product quantity: " + element.stock_quantity)
         });
-
-        // connection.end();
         promptManagers();
     });
 }
-
+// prompting manager to add an inventory
 function promptAdd() {
-    // prompt for info about the item being put up for a manager
     inquirer
         .prompt([
             {
@@ -105,12 +95,10 @@ function promptAdd() {
             },
         ])
         .then(function (answer) {
-            // console.log("answer", answer);
             afterConnection2(answer.addItem, answer.units);
-            // console.log("answer", answer);
-            // connection.end();
         });
 }
+// setting third command "Add to Inventory"
 function afterConnection2(item_id, stock_quantity) {
     connection.query(`UPDATE products SET stock_quantity = stock_quantity + ${stock_quantity} WHERE ?`,
         [
@@ -121,11 +109,10 @@ function afterConnection2(item_id, stock_quantity) {
         function (err, res) {
             if (err) throw err;
             console.log("Everything is under control");
-            // connection.end();
             promptManagers();
         });
 }
-
+// setting fourth case "Add New Product"
 function afterConnection3(product_name, department_name, price, stock_quantity) {
     connection.query('INSERT INTO products SET ?',
         {
@@ -137,13 +124,11 @@ function afterConnection3(product_name, department_name, price, stock_quantity) 
         function (err, res) {
             if (err) throw err;
             console.log("Everything is under control");
-            // connection.end();
             promptManagers();
         });
 }
-
+// prompting manager to add a new item
 function promptNewItem() {
-    // prompt for info about the item being put up for a manager
     inquirer
         .prompt([
             {
@@ -192,13 +177,10 @@ function promptNewItem() {
             },
         ])
         .then(function (answer) {
-            // console.log("answer", answer);
             afterConnection3(answer.addItemName, answer.addItemDepartment, answer.addItemPrice, answer.addUnits);
-            // console.log("answer", answer);
-            // connection.end();
         });
 }
-
+// looping throgh commands and calling for a particular function
 function commands(answer) {
     if (answer.command === "View Products for Sale") {
         afterConnection();

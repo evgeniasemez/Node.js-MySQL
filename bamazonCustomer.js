@@ -1,3 +1,4 @@
+// setting connection
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
@@ -17,10 +18,9 @@ var connection = mysql.createConnection({
 
 connection.connect(function (err) {
     if (err) throw err;
-    // console.log("connected as id " + connection.threadId);
-    // connection.end();
     afterConnection();
 });
+// getting an info from mysql
 function afterConnection() {
     connection.query("SELECT `item_id`, `product_name`, `price` FROM products", function (err, res) {
         if (err) throw err;
@@ -29,14 +29,11 @@ function afterConnection() {
             console.log("Product name: " + element.product_name);
             console.log("Product price: " + element.price);
         });
-
-        // connection.end();
         promptUsers();
     });
 }
-
+// prompt users for action
 function promptUsers() {
-    // prompt for info about the item being put up for auction
     inquirer
         .prompt([
             {
@@ -63,11 +60,10 @@ function promptUsers() {
             },
         ])
         .then(function (answer) {
-            // console.log("answer", answer);
             checkInventoryLevel(answer);
-            // connection.end();
         });
 }
+// the case with Insufficient quantity
 function checkInventoryLevel(answer) {
     connection.query("SELECT `stock_quantity`, `price` FROM products WHERE ?",
         {
@@ -86,9 +82,8 @@ function checkInventoryLevel(answer) {
             }
         });
 }
+// updating DB
 function updatedDB(answer, res) {
-    // console.log(res[0].stock_quantity);
-    // console.log(res[0].stock_quantity - answer.units);
     connection.query("UPDATE products SET ? WHERE ?",
         [
             {
