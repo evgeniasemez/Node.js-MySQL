@@ -1,12 +1,16 @@
 # Node.js-MySQL
 1. user usage for bamazonCustomer:
-Happy Pass:
+
+# Happy Pass:
+
 Enter the ID of the product you would like to buy form 1 to 10
+
 How many units of the product would you like to buy? 
 
 ![Screenshot](images/bamazonShot.png)
 
-Error Pass:
+# Error Pass:
+
 what if there are not enough items in stock
 
 ![Screenshot](images/bamazonShot_error.png)
@@ -20,16 +24,22 @@ from the list of commands pick the one you would like to run:
 
 
 
-First case: View Products for Sale
+# First case: View Products for Sale
+
 ![Screenshot](images/bamazonManagerShot_1.png)
 
-Second case: View Low Inventory
+# Second case: View Low Inventory
+
 ![Screenshot](images/bamazonManagerShot_2.png)
 
-Third case: Add to Inventory
+# Third case: Add to Inventory
+
 ![Screenshot](images/bamazonManagerShot_Add.png)
 
-Forth case: Add New Product
+# Forth case: Add New Product
+
 ![Screenshot](images/bamazonManagerShot_NewItem.png)
-result:
+
+# result:
+
 ![Screenshot](images/bamazonManagerShot_result.png.png)
