@@ -23,3 +23,11 @@ First case: View Products for Sale
 
 Second case: View Low Inventory
 ![Screenshot](images/bamazonManagerShot_2.png)
+
+Third case: Add to Inventory
+![Screenshot](images/bamazonManagerShot_Add.png)
+
+Forth case: Add New Product
+![Screenshot](images/bamazonManagerShot_NewItem.png)
+result:
+![Screenshot](images/bamazonManagerShot_result.png)

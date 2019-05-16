@@ -78,7 +78,7 @@ function afterConnection1() {
 }
 
 function promptAdd() {
-    // prompt for info about the item being put up for auction
+    // prompt for info about the item being put up for a manager
     inquirer
         .prompt([
             {
@@ -114,9 +114,6 @@ function promptAdd() {
 function afterConnection2(item_id, stock_quantity) {
     connection.query(`UPDATE products SET stock_quantity = stock_quantity + ${stock_quantity} WHERE ?`,
         [
-            // {
-            //     stock_quantity,
-            // },
             {
                 item_id: item_id,
             }
@@ -126,6 +123,79 @@ function afterConnection2(item_id, stock_quantity) {
             console.log("Everything is under control");
             // connection.end();
             promptManagers();
+        });
+}
+
+function afterConnection3(product_name, department_name, price, stock_quantity) {
+    connection.query('INSERT INTO products SET ?',
+        {
+            product_name: product_name,
+            department_name: department_name,
+            price: price,
+            stock_quantity: stock_quantity
+        },
+        function (err, res) {
+            if (err) throw err;
+            console.log("Everything is under control");
+            // connection.end();
+            promptManagers();
+        });
+}
+
+function promptNewItem() {
+    // prompt for info about the item being put up for a manager
+    inquirer
+        .prompt([
+            {
+                name: "addItemName",
+                type: "input",
+                message: "Which product would you like to add? ",
+                validate: function (value) {
+                    if (value) {
+                        return true;
+                    }
+                    return false;
+                }
+            },
+            {
+                name: "addItemDepartment",
+                type: "input",
+                message: "What product's department woould you like to add? ",
+                validate: function (value) {
+                    if (value) {
+                        return true;
+                    }
+                    return false;
+                }
+            },
+            {
+                name: "addItemPrice",
+                type: "input",
+                message: "What product's price woould you like to add? ",
+                validate: function (value) {
+                    if (value) {
+                        return true;
+                    }
+                    return false;
+                }
+            },
+            {
+                name: "addUnits",
+                type: "input",
+                message: "How much inventory to add? ",
+                validate: function (value) {
+                    if (value) {
+                        return true;
+                    }
+                    return false;
+                }
+            },
+        ])
+        .then(function (answer) {
+            // console.log("answer", answer);
+            afterConnection3(answer.addItemName, answer.addItemDepartment, answer.addItemPrice, answer.addUnits);
+            // console.log("answer", answer);
+            // connection.end();
         });
 }
 
@@ -139,7 +209,9 @@ function commands(answer) {
     else if (answer.command === "Add to Inventory") {
         promptAdd();
     }
-
+    else if (answer.command === "Add New Product") {
+        promptNewItem();
+    }
 }
 
 
