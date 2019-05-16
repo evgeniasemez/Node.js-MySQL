@@ -77,15 +77,67 @@ function afterConnection1() {
     });
 }
 
+function promptAdd() {
+    // prompt for info about the item being put up for auction
+    inquirer
+        .prompt([
+            {
+                name: "addItem",
+                type: "input",
+                message: "Which product would you like to update? ",
+                validate: function (value) {
+                    if (isNaN(value) === false) {
+                        return true;
+                    }
+                    return false;
+                }
+            },
+            {
+                name: "units",
+                type: "input",
+                message: "How much inventory to add? ",
+                validate: function (value) {
+                    if (isNaN(value) === false) {
+                        return true;
+                    }
+                    return false;
+                }
+            },
+        ])
+        .then(function (answer) {
+            // console.log("answer", answer);
+            afterConnection2(answer.addItem, answer.units);
+            // console.log("answer", answer);
+            // connection.end();
+        });
+}
+function afterConnection2(item_id, stock_quantity) {
+    connection.query(`UPDATE products SET stock_quantity = stock_quantity + ${stock_quantity} WHERE ?`,
+        [
+            // {
+            //     stock_quantity,
+            // },
+            {
+                item_id: item_id,
+            }
+        ],
+        function (err, res) {
+            if (err) throw err;
+            console.log("Everything is under control");
+            // connection.end();
+            promptManagers();
+        });
+}
+
 function commands(answer) {
     if (answer.command === "View Products for Sale") {
         afterConnection();
     }
-    else if(answer.command === "View Low Inventory"){
+    else if (answer.command === "View Low Inventory") {
         afterConnection1();
     }
-    else if(answer.command === "Add to Inventory"){
-        
+    else if (answer.command === "Add to Inventory") {
+        promptAdd();
     }
 
 }
